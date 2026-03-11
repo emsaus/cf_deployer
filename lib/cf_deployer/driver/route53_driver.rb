@@ -77,7 +77,7 @@ module CfDeployer
       end
 
       def get_record_set(hosted_zone, target_host_name)
-        @aws_route53.list_resource_record_sets(hosted_zone_id: hosted_zone.id)
+        @aws_route53.list_resource_record_sets({:hosted_zone_id => hosted_zone.id})
           .resource_record_sets
           .find { |r| r.name == trailing_dot(target_host_name.downcase) }
       end

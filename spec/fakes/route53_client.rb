@@ -1,3 +1,5 @@
+require 'ostruct'
+
 module Fakes
   class AWSRoute53
     attr_reader :fail_counter, :hosted_zones, :client

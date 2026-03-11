@@ -3,7 +3,7 @@ module CfDeployer
 
     def self.erb_to_json filename, config
       json_file = File.join(config[:config_dir], "#{filename}.json")
-      raise ApplicationError.new("#{json_file} is missing") unless File.exists?(json_file)
+      raise ApplicationError.new("#{json_file} is missing") unless File.exist?(json_file)
       CfDeployer::Log.info "ERBing JSON for #{filename}"
       ERB.new(File.read(json_file)).result(binding)
     rescue RuntimeError,TypeError,NoMethodError => e

@@ -11,8 +11,20 @@ def override_aws_environment options = {}
   options[:AWS_REGION] ||= 'us-east-1'
   options[:AWS_ACCESS_KEY_ID] ||= 'someId'
   options[:AWS_SECRET_ACCESS_KEY] ||= 'secretKey'
+  options[:AWS_EC2_METADATA_DISABLED] ||= 'true'
+  options[:AWS_SDK_CONFIG_OPT_OUT] ||= '1'
 
-  override_environment_variables(options) { yield }
+  override_environment_variables(options) do
+    previous_aws_config = Aws.config.dup
+    Aws.config.update(
+      region: options[:AWS_REGION],
+      credentials: Aws::Credentials.new(options[:AWS_ACCESS_KEY_ID], options[:AWS_SECRET_ACCESS_KEY])
+    )
+    yield
+  ensure
+    Aws.config.clear
+    Aws.config.update(previous_aws_config)
+  end
 end
 
 def override_environment_variables options = {}

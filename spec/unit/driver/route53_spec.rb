@@ -20,7 +20,7 @@ describe CfDeployer::Driver::Route53 do
       route53 = double('route53')
       allow(Aws::Route53::Client).to receive(:new) { route53 }
       allow(route53).to receive_message_chain(:list_hosted_zones_by_name, :hosted_zones) { [zone] }
-      allow(route53).to receive(:list_resource_record_sets).with(hosted_zone_id: '/hostedzone/hostedzoneid') { resource_record_sets }
+      allow(route53).to receive(:list_resource_record_sets).with(hash_including(hosted_zone_id: '/hostedzone/hostedzoneid')) { resource_record_sets }
 
       expect(subject.find_alias_target('target.com', 'foo')).to be_nil
     end
@@ -31,7 +31,7 @@ describe CfDeployer::Driver::Route53 do
       zone = double('zone', :id => '/hostedzone/hostedzoneid', :name => 'target.com.')
       route53 = double('route53')
       allow(route53).to receive_message_chain(:list_hosted_zones_by_name, :hosted_zones) { [zone] }
-      allow(route53).to receive(:list_resource_record_sets).with(hosted_zone_id: '/hostedzone/hostedzoneid') { resource_record_sets }
+      allow(route53).to receive(:list_resource_record_sets).with(hash_including(hosted_zone_id: '/hostedzone/hostedzoneid')) { resource_record_sets }
       allow(Aws::Route53::Client).to receive(:new) { route53 }
 
       expect(subject.find_alias_target('Target.com', 'Foo.target.com')).to eq('abc.com')
@@ -43,7 +43,7 @@ describe CfDeployer::Driver::Route53 do
       zone = double('zone', :id => '/hostedzone/hostedzoneid', :name => 'target.com.')
       route53 = double('route53')
       allow(route53).to receive_message_chain(:list_hosted_zones_by_name, :hosted_zones) { [zone] }
-      allow(route53).to receive(:list_resource_record_sets).with(hosted_zone_id: '/hostedzone/hostedzoneid') { resource_record_sets }
+      allow(route53).to receive(:list_resource_record_sets).with(hash_including(hosted_zone_id: '/hostedzone/hostedzoneid')) { resource_record_sets }
       allow(Aws::Route53::Client).to receive(:new) { route53 }
 
       expect(subject.find_alias_target('target.com', 'foo.target.com')).to be_nil
@@ -55,7 +55,7 @@ describe CfDeployer::Driver::Route53 do
       zone = double('zone', :id => '/hostedzone/hostedzoneid', :name => 'target.com.')
       route53 = double('route53')
       allow(route53).to receive_message_chain(:list_hosted_zones_by_name, :hosted_zones) { [zone] }
-      allow(route53).to receive(:list_resource_record_sets).with(hosted_zone_id: '/hostedzone/hostedzoneid') { resource_record_sets }
+      allow(route53).to receive(:list_resource_record_sets).with(hash_including(hosted_zone_id: '/hostedzone/hostedzoneid')) { resource_record_sets }
       allow(Aws::Route53::Client).to receive(:new) { route53 }
 
       expect(subject.find_alias_target('target.com.', 'foo.target.com.')).to eq('abc.com')

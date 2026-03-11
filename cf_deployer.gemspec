@@ -8,6 +8,7 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Support multiple components deployment using CloudFormation templates with multiple blue green strategies.}
   gem.homepage      = "http://github.com/manheim/cf_deployer"
   gem.license = 'MIT'
+  gem.required_ruby_version = '>= 3.2.8', '< 3.3'
 
   gem.add_runtime_dependency 'aws-sdk-autoscaling', '~> 1.86'
   gem.add_runtime_dependency 'aws-sdk-cloudformation', '~> 1.76'

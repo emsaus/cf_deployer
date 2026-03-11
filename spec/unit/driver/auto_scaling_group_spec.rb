@@ -84,7 +84,8 @@ describe 'Autoscaling group driver' do
 
       before(:each) do
         allow(group).to receive(:load_balancer_names).and_return(['elb1'])
-        allow(elb_driver).to receive(:describe_instance_health).with(load_balancer_name: 'elb1') { elb1_instance_health }
+        allow(elb_driver).to receive(:describe_instance_health)
+          .with(hash_including(load_balancer_name: 'elb1')) { elb1_instance_health }
       end
 
       it 'returns the ids of all instances that are in service' do
@@ -107,9 +108,12 @@ describe 'Autoscaling group driver' do
 
       before(:each) do
         allow(group).to receive(:load_balancer_names).and_return(['elb1', 'elb2', 'elb3'])
-        allow(elb_driver).to receive(:describe_instance_health).with(load_balancer_name: 'elb1') { elb1_instance_health }
-        allow(elb_driver).to receive(:describe_instance_health).with(load_balancer_name: 'elb2') { elb2_instance_health }
-        allow(elb_driver).to receive(:describe_instance_health).with(load_balancer_name: 'elb3') { elb3_instance_health }
+        allow(elb_driver).to receive(:describe_instance_health)
+          .with(hash_including(load_balancer_name: 'elb1')) { elb1_instance_health }
+        allow(elb_driver).to receive(:describe_instance_health)
+          .with(hash_including(load_balancer_name: 'elb2')) { elb2_instance_health }
+        allow(elb_driver).to receive(:describe_instance_health)
+          .with(hash_including(load_balancer_name: 'elb3')) { elb3_instance_health }
       end
 
       it 'returns only the ids of instances that are in all ELBs' do

@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe CfDeployer::Hook do
   before :all do
-    Dir.mkdir 'tmp' unless Dir.exists?('tmp')
+    Dir.mkdir 'tmp' unless Dir.exist?('tmp')
     @file = File.expand_path("../../../tmp/test_code.rb", __FILE__)
   end
   it 'should eval string as hook' do

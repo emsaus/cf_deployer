@@ -10,7 +10,7 @@ describe CfDeployer::Driver::Elb do
     load_balancer_descriptions = double('elb', :load_balancer_descriptions => [elb])
 
     expect(Aws::ElasticLoadBalancing::Client).to receive(:new){aws}
-    expect(aws).to receive(:describe_load_balancers).with(:load_balancer_names => [elb_name]) { load_balancer_descriptions }
+    expect(aws).to receive(:describe_load_balancers).with(hash_including(load_balancer_names: [elb_name])) { load_balancer_descriptions }
 
     expect(CfDeployer::Driver::Elb.new.find_dns_and_zone_id(elb_name)).to eq({:dns_name => 'mydns', :canonical_hosted_zone_name_id => 'zone_id'})
   end

@@ -79,7 +79,7 @@ module CfDeployer
       file_name = component[hook_name][:file]
       return unless file_name
       path = File.join(component[:config_dir], file_name)
-      @errors << "File '#{path}' does not exist, which is required by hook '#{hook_name}'" unless File.exists?(path)
+      @errors << "File '#{path}' does not exist, which is required by hook '#{hook_name}'" unless File.exist?(path)
     end
 
     def check_environments
